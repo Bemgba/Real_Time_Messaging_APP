@@ -13,29 +13,51 @@ const ChatLayout=({children})=>{
     console.log("conversations", conversations)
     console.log("selectedConversation", selectedConversation);
 
-    useEffect(()=>{ 
-      setSortedConversations.sort(
-        localConversations.sort( (a,b)=>{
-         if(a.blocked_at && b.blocked_at){
-            return a.blocked_at > b.blocked_at ? 1: -1;
-         }else if (b.blocked_at){
-            return -1;
-         }
-         if (a.last_message_date && b.last_message_date){
-            return b.last_message_date.localeCompare(
-               a.last_message_date
-            );
-         }else if(a.last_message_date){
-            return -1;
-         }else if(b.last_message_date){
-            return 1;
-         }else {
-            return 0;
-         }
-      })
-   );
-   },[localConversations]);
+   //  useEffect(()=>{ 
+   //    setSortedConversations.sort(
+   //      localConversations.sort( (a,b)=>{
+   //       if(a.blocked_at && b.blocked_at){
+   //          return a.blocked_at > b.blocked_at ? 1: -1;
+   //       }else if (b.blocked_at){
+   //          return -1;
+   //       }
+   //       if (a.last_message_date && b.last_message_date){
+   //          return b.last_message_date.localeCompare(
+   //             a.last_message_date
+   //          );
+   //       }else if(a.last_message_date){
+   //          return -1;
+   //       }else if(b.last_message_date){
+   //          return 1;
+   //       }else {
+   //          return 0;
+   //       }
+   //    })
+   // );
+   // },[localConversations]);
+   useEffect(()=>{ 
+      // Sort localConversations array
+      const sorted = localConversations.sort((a, b) => {
+        if (a.blocked_at && b.blocked_at) {
+          return a.blocked_at > b.blocked_at ? 1 : -1;
+        } else if (b.blocked_at) {
+          return -1;
+        }
+        if (a.last_message_date && b.last_message_date) {
+          return b.last_message_date.localeCompare(a.last_message_date);
+        } else if (a.last_message_date) {
+          return -1;
+        } else if (b.last_message_date) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      // Update the sorted state
+      setSortedConversations(sorted);
+    }, [localConversations]);
 
+    
    useEffect(()=>{
       setLocalConversations(conversations);
    },[conversations]);
