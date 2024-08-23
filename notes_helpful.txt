@@ -1,0 +1,35 @@
+composer require laravel/breeze --dev
+php artisan breeze:install
+DEPENDENCIES
+Headless UI
+HeroIcons
+Daisy UI
+Emoji-picker-react
+react-markdown
+uuid
+
+.........
+..........
+npm install @headlessui/react @heroicons/react daisyui emoji-picker-react react-markdown uuid
+.....................
+php artisan install:broadcasting
+.........................
+
+MODELS
+user
+Groups
+Iser-Groups
+Messeges
+Conversations
+Attatchments
+.........................
+..........................
+php artisan reverb:start --debug
+
+php artisan make:factory GroupFactory
+php artisan make:factory MessageFactory
+
+php artisan make:resource UserResource
+
+
+
