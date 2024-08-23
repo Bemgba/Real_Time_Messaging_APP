@@ -1,6 +1,6 @@
 # Real_Time_Messaging_APP
 Real time Messaging Application built with php and Laravel.
-did not anyother technology for real time data exchange.
+did not use any other technology for real time data exchange.
 its for small and medium scale organisation for internal communication and file sharing.
 Add new User is for admin , block and unblock existing users, give and remove admin user permisions
 Sending and receiving messages in real time is most important feature.
