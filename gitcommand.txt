@@ -1,0 +1,5 @@
+git checkout conversations
+git push --set-upstream origin develop
+git push --set-upstream origin main
+git checkout develop
+git push

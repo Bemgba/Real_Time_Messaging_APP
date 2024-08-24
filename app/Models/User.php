@@ -31,7 +31,7 @@ public function groups(){
 }
 
 public static  function getUsersExceptUser(User $user){
-    dd('getUsersExceptUser method called');
+    // dd('getUsersExceptUser method called');
   $userId=$user->id;
   $query=User::select(['users.*','messages.message as last_message','messages.created_at as last_message_date'])
   ->where('users.id','!=',$userId)

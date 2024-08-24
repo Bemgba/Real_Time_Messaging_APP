@@ -31,14 +31,34 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
+    // public function share(Request $request): array
+    // {
+    //     return [
+    //         ...parent::share($request),
+    //         'auth' => [
+    //             'user' => $request->user(),
+    //         ],
+    //         'conversations'=>Auth::id() ? Conversation::getConversationsForSiderbar (Auth::user()) : [] ,
+    //     ];
+    // }
     public function share(Request $request): array
     {
+        // Fetch all conversations for the sidebar
+        $conversations = Auth::check() ? Conversation::getConversationsForSiderbar(Auth::user()) : [];
+
+        // Determine the selected conversation, e.g., by a request parameter
+        $selectedConversation = null;
+        if ($request->has('conversation_id')) {
+            $selectedConversation = Conversation::find($request->input('conversation_id'));
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
             ],
-            'conversations'=>Auth::id() ? Conversation::getConversationsForSiderbar (Auth::user()) : [] ,
+            'conversations' => $conversations,
+            'selectedConversation' => $selectedConversation,
         ];
     }
 }
