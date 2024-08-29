@@ -40,30 +40,27 @@ class Conversation extends Model
         }));
 
     }
-    // public static function getConversationsForSidebar(User $exceptUser)
-    // {
-    //     // Create an instance of User or use the passed instance if possible
-    //     // Assuming $exceptUser can be used to call instance methods
-    //     // or ensure to call getUsersExceptUser on an appropriate instance.
+   public static function updateConversationWithMessage($userId1, $userId2, $message){
+    //find conversation by user_id1 and user_id2 and update last message_id
+    $converstion=Conversation::where (function($query)use ($userId1, $userId2){
+        $query->where('user_id1',$userId1)
+        ->where('user_id2',$userId2);
     
-    //     // Retrieve users except the specified user
-    //     $users = $exceptUser->getUsersExceptUser($exceptUser);
-        
-    //     // Retrieve groups for the specified user (assuming this is a static method)
-    //     $groups = Group::getGroupsForUser($exceptUser);
-    
-    //     // Map users to conversation arrays
-    //     $userConversations = $users->map(function(User $user) {
-    //         return $user->toConversationArray();
-    //     });
-    
-    //     // Map groups to conversation arrays
-    //     $groupConversations = $groups->map(function(Group $group) {
-    //         return $group->toConversationArray();
-    //     });
-    
-    //     // Concatenate user and group conversations
-    //     return $userConversations->concat($groupConversations);
-    // }
+    })->orWhere(function($query) use ($userId1,$userId2){
+        $query->where('user_id1',$userId2)
+        ->where('user_id2',$userId1);
+    })->first();
+    if($converstion){
+        $converstion->update([
+            'last_message_id'=>$message->id,
+        ]);
+    }else{
+        Conversation::create([
+            'user_id1'=>$userId1,
+            'user_id2'=>$userId2,
+            'last_message_id'=>$message->id,
+        ]);
+    } 
+   }
 
 }
